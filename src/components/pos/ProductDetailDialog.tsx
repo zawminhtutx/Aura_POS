@@ -32,12 +32,7 @@ export function ProductDetailDialog({ product, isOpen, onOpenChange }: ProductDe
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
   };
   const handleAddToCart = () => {
-    const existingItem = items.find(item => item.id === product.id);
-    if (existingItem) {
-      updateCartQuantity(product.id, existingItem.quantity + quantity);
-    } else {
-      addItem({ ...product, quantity });
-    }
+    addItem(product, quantity);
     toast.success(`${quantity} x ${product.name} added to cart.`);
     onOpenChange(false);
   };

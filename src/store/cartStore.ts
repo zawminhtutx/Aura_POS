@@ -12,7 +12,7 @@ export type HeldCart = {
 type CartState = {
   items: CartItem[];
   heldCarts: HeldCart[];
-  addItem: (product: Product) => void;
+  addItem: (product: Product, quantity?: number) => void;
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
@@ -30,13 +30,13 @@ export const useCartStore = create(
   immer<CartState>((set, get) => ({
     items: [],
     heldCarts: [],
-    addItem: (product) => {
+    addItem: (product, quantity = 1) => {
       set((state) => {
         const existingItem = state.items.find((item) => item.id === product.id);
         if (existingItem) {
-          existingItem.quantity += 1;
+          existingItem.quantity += quantity;
         } else {
-          state.items.push({ ...product, quantity: 1 });
+          state.items.push({ ...product, quantity });
         }
       });
     },
